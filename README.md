@@ -1,24 +1,24 @@
-## Architecture Minimale – Accélérateur de Bien Commun
+## Minimal Architecture – Common Good Accelerator
 
-Implémentation concrète (version minimale exécutable)
-
----
-
-# 1️⃣ Instanciation minimale des composants
-
-| Élément                    | Implémentation minimale             | Rôle                   |
-| -------------------------- | ----------------------------------- | ---------------------- |
-| **État (S)**               | `STATE.json` persistant             | Mémoire du système     |
-| **Fonction d’ancrage (f)** | Fonction externe pure et vérifiable | Mesure objective       |
-| **Opérateur (π)**          | LLM ou algorithme déterministe      | Propose une correction |
-| **Log**                    | `RUNLOG.md`                         | Traçabilité            |
+Concrete implementation (minimal executable version)
 
 ---
 
-# 2️⃣ Structure des fichiers
+# 1️⃣ Minimal instantiation of components
+
+| Element                   | Minimal implementation             | Role                   |
+| ------------------------- | ---------------------------------- | ---------------------- |
+| **State (S)**             | Persistent `STATE.json`            | System memory          |
+| **Anchoring function (f)**| Pure, verifiable external function | Objective measurement  |
+| **Operator (π)**          | LLM or deterministic algorithm     | Proposes a correction  |
+| **Log**                   | `RUNLOG.md`                        | Traceability           |
+
+---
+
+# 2️⃣ File structure
 
 ```
-accelerateur/
+accelerator/
 │
 ├── STATE.json
 ├── RUNLOG.md
@@ -29,9 +29,9 @@ accelerateur/
 
 ---
 
-# 3️⃣ Exemple concret d’implémentation (Python minimal)
+# 3️⃣ Concrete implementation example (minimal Python)
 
-## 3.1 STATE.json (exemple initial)
+## 3.1 STATE.json (initial example)
 
 ```json
 {
@@ -44,14 +44,14 @@ accelerateur/
 
 ## 3.2 anchor.py
 
-Hard constraint mesurable.
+Measurable hard constraint.
 
 ```python
 def anchor_function(state: dict) -> float:
     """
-    f(S) = distance au Bien Commun.
-    Ici : on cherche à maximiser 'score' vers 1.0
-    Retourne l'erreur (1 - score).
+    f(S) = distance from the Common Good.
+    Here, we aim to maximize 'score' toward 1.0.
+    Returns the error (1 - score).
     """
     return 1.0 - state["score"]
 ```
@@ -60,13 +60,13 @@ def anchor_function(state: dict) -> float:
 
 ## 3.3 operator.py
 
-L’intelligence π.
+The intelligence π.
 
 ```python
 def operator(state: dict, error_signal: float) -> dict:
     """
     π(S, f(S)) → S'
-    Correction proportionnelle simple.
+    Simple proportional correction.
     """
     learning_rate = 0.1
     state["score"] += learning_rate * error_signal
@@ -78,7 +78,7 @@ def operator(state: dict, error_signal: float) -> dict:
 
 ## 3.4 main.py
 
-Boucle récursive dirigée.
+Directed recursive loop.
 
 ```python
 import json
@@ -113,72 +113,72 @@ if __name__ == "__main__":
 
 ---
 
-# 4️⃣ Correspondance formelle
+# 4️⃣ Formal correspondence
 
-Implémentation directe de :
+Direct implementation of:
 
 [
 S_{t+1} = \pi(S_t, f(S_t))
 ]
 
-* `S_t` → contenu de `STATE.json`
+* `S_t` → contents of `STATE.json`
 * `f(S_t)` → `anchor_function`
 * `π` → `operator`
-* Persistance → garantie par disque
-* Hiérarchie logique → `operator` ne peut pas modifier `anchor_function`
+* Persistence → guaranteed by disk
+* Logical hierarchy → `operator` cannot modify `anchor_function`
 
 ---
 
-# 5️⃣ Version LLM (π intelligent)
+# 5️⃣ LLM version (intelligent π)
 
-Remplacer `operator.py` par :
+Replace `operator.py` with:
 
 ```python
 import openai
 
 def operator(state, error_signal):
     prompt = f"""
-    Etat actuel : {state}
-    Erreur mesurée : {error_signal}
-    Propose une modification minimale pour réduire l'erreur.
-    Répond uniquement en JSON.
+    Current state: {state}
+    Measured error: {error_signal}
+    Propose a minimal modification to reduce the error.
+    Reply only in JSON.
     """
-    # appel LLM
+    # LLM call
     response = call_llm(prompt)
     return response
 ```
 
-Condition critique :
-L’anchor reste externe, non modifiable.
+Critical condition:
+The anchor remains external and non-modifiable.
 
 ---
 
-# 6️⃣ Invariant de Sécurité Implémenté
+# 6️⃣ Implemented security invariant
 
-* `anchor.py` en lecture seule
-* Validation externe possible
-* Aucun auto-score
-* Log immuable
-
----
-
-# 7️⃣ Extension minimale pour Bien Commun réel
-
-Exemples de fonctions d’ancrage possibles :
-
-| Domaine        | Ancrage dur possible          |
-| -------------- | ----------------------------- |
-| Énergie        | kWh économisés (capteur réel) |
-| Pollution      | ppm CO₂ mesuré                |
-| Social         | taux de satisfaction réel     |
-| Code           | % de tests passés             |
-| Désinformation | score fact-check API          |
+* `anchor.py` read-only
+* External validation possible
+* No self-scoring
+* Immutable log
 
 ---
 
-# 8️⃣ Version Ultra-Minimale (concept pur)
+# 7️⃣ Minimal extension for real Common Good
 
-3 lignes logiques suffisent :
+Examples of possible anchoring functions:
+
+| Domain         | Possible hard anchor              |
+| -------------- | --------------------------------- |
+| Energy         | kWh saved (real sensor)           |
+| Pollution      | measured CO₂ ppm                  |
+| Social         | real satisfaction rate            |
+| Code           | % of tests passed                 |
+| Disinformation | fact-check API score              |
+
+---
+
+# 8️⃣ Ultra-minimal version (pure concept)
+
+3 logical lines are enough:
 
 ```python
 while True:
@@ -186,20 +186,20 @@ while True:
     S = π(S, error)
 ```
 
-Tout le reste est instrumentation.
+Everything else is instrumentation.
 
 ---
 
-# Résumé
+# Summary
 
-Un accélérateur minimal du Bien Commun nécessite uniquement :
+A minimal Common Good accelerator requires only:
 
-1. **Un état persistant**
-2. **Une métrique externe dure**
-3. **Un opérateur contraint par cette métrique**
+1. **A persistent state**
+2. **A hard external metric**
+3. **An operator constrained by this metric**
 
-Sans ancrage dur → dérive.
-Sans opérateur → inertie.
-Sans état → pas d’accumulation.
+Without a hard anchor → drift.
+Without an operator → inertia.
+Without state → no accumulation.
 
-La structure est complète dès que la boucle tourne.
+The structure is complete as soon as the loop runs.

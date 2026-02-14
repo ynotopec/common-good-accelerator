@@ -1,46 +1,46 @@
-# Architecture Minimale – Accélérateur de Bien Commun
-(Spécification de Référence)
+# Minimal Architecture – Common Good Accelerator
+(Reference Specification)
 
-## 1. Principe Fondamental
-L'optimisation ne naît pas de l'architecture logicielle, mais de la **résistance du réel**.
-Pour qu'il y ait direction (amélioration), il faut qu'il y ait contrainte (ancrage).
+## 1. Fundamental Principle
+Optimization does not arise from software architecture, but from the **resistance of reality**.
+For there to be direction (improvement), there must be constraint (anchoring).
 
-## 2. Triade Irréductible
+## 2. Irreducible Triad
 
-1.  **L’État ($S$)**
-    La représentation courante du système.
+1.  **State ($S$)**
+    The current representation of the system.
 
-2.  **La Fonction d'Ancrage ($f$)**
-    Mesure la divergence entre l'état $S$ et le Bien Commun.
-    *Condition critique :* $f$ doit être une **hard constraint** (données, oracle, règles) et non une auto-évaluation.
+2.  **Anchoring Function ($f$)**
+    Measures the divergence between state $S$ and the Common Good.
+    *Critical condition:* $f$ must be a **hard constraint** (data, oracle, rules), not a self-evaluation.
 
-3.  **L'Opérateur de Mise à jour ($\pi$)**
-    L'intelligence qui transforme le signal d'erreur en correction.
+3.  **Update Operator ($\pi$)**
+    The intelligence that transforms the error signal into a correction.
 
-## 3. Formalisation
+## 3. Formalization
 
-Le système est une fonction récursive dirigée :
+The system is a directed recursive function:
 
 [
 S_{t+1} = \pi\big(S_t, f(S_t)\big)
 ]
 
-**Détail du signal $f(S_t)$ :**
-Il fournit la **direction** de la correction.
-*   *Cas continu :* Gradient mathématique (intensité + vecteur).
-*   *Cas discret :* Signal binaire, rapport d'erreur ou score scalaire.
+**Details of the signal $f(S_t)$:**
+It provides the **direction** of correction.
+*   *Continuous case:* Mathematical gradient (magnitude + vector).
+*   *Discrete case:* Binary signal, error report, or scalar score.
 
-## 4. Invariant de Sécurité
+## 4. Security Invariant
 
-La séparation physique est optionnelle.
-La hiérarchie logique est absolue :
+Physical separation is optional.
+Logical hierarchy is absolute:
 
-> **La fonction d'ancrage $f$ contraint l'opérateur $\pi$.**
-> (L'intelligence sert la métrique, elle ne la définit pas.)
+> **The anchoring function $f$ constrains the operator $\pi$.**
+> (Intelligence serves the metric; it does not define it.)
 
 ---
 
 ## Conclusion
 
-Le système minimal est :
-**Un état persistant ($S$) piloté par une intelligence ($\pi$) asservie à une réalité mesurable ($f$).**
+The minimal system is:
+**A persistent state ($S$) steered by an intelligence ($\pi$) constrained by measurable reality ($f$).**
