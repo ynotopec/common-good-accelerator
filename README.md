@@ -21,10 +21,22 @@ This repository now includes a runnable reference implementation of the minimal 
 
 ## Quick start
 
-Run the optimizer loop:
+Run the optimizer loop (simulation mode):
 
 ```bash
 python -m accelerator.main --iterations 20
+```
+
+Run with an external evidence file (reality anchor):
+
+```bash
+python -m accelerator.main --iterations 20 --evidence-file ./evidence.json
+```
+
+Where `evidence.json` contains at least:
+
+```json
+{"score": 0.42}
 ```
 
 Run tests:
@@ -51,6 +63,7 @@ python -m unittest discover -s tests -p 'test_*.py'
 * `anchor_function(state)` computes the error as `1.0 - score` (bounded).
 * `operator(state, error)` applies a proportional correction and increments iteration.
 * `run(iterations)` repeatedly applies the recursive update loop and persists each state.
+* If `--evidence-file` is provided, each iteration reads an observed external score from JSON and logs it as `Observed=...`.
 
 Formal recurrence:
 
@@ -75,6 +88,9 @@ A minimal Common Good accelerator requires only:
 1. **A persistent state**
 2. **A hard external metric**
 3. **An operator constrained by this metric**
+
+In this repository, running without `--evidence-file` is an explicit simulation mode.
+Use `--evidence-file` to connect the loop to observed reality signals.
 
 Without a hard anchor → drift.
 Without an operator → inertia.
