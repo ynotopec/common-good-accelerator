@@ -1,9 +1,10 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
 
 from accelerator.anchor import anchor_function
-from accelerator.main import load_state, run, save_state
+from accelerator.main import load_external_score, load_state, run, save_state
 from accelerator.operator import operator
 
 
@@ -37,6 +38,31 @@ class AcceleratorTests(unittest.TestCase):
         for _ in range(10):
             state = operator(state, anchor_function(state))
         self.assertGreater(state["score"], 0.6)
+
+    def test_external_score_is_used_when_provided(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            state_path = Path(tmpdir) / "STATE.json"
+            runlog_path = Path(tmpdir) / "RUNLOG.md"
+            evidence_path = Path(tmpdir) / "evidence.json"
+
+            save_state({"score": 0.0, "iteration": 0}, state_path)
+            evidence_path.write_text(json.dumps({"score": 0.75}), encoding="utf-8")
+
+            final_state = run(
+                1,
+                state_path=state_path,
+                runlog_path=runlog_path,
+                evidence_path=evidence_path,
+            )
+            self.assertEqual(final_state["iteration"], 1)
+            self.assertAlmostEqual(final_state["observed_score"], 0.75, places=6)
+            self.assertGreater(final_state["score"], 0.75)
+
+    def test_load_external_score_clamps_values(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            evidence_path = Path(tmpdir) / "evidence.json"
+            evidence_path.write_text(json.dumps({"score": 8.0}), encoding="utf-8")
+            self.assertEqual(load_external_score(evidence_path), 1.0)
 
 
 if __name__ == "__main__":
