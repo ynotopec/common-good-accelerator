@@ -1,0 +1,1 @@
+"""Common Good Accelerator package."""
